@@ -22,24 +22,15 @@ class MainActivity : BaseActivity() {
     var fragmentManager: FragmentManager? = null
     var firstFragment: FirstFragment? = null
 //    var secondFragment: SecondFragment? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
     }
-
     override fun _init() {
         initTap()
     }
-    override fun onClick(v: View) {
-        when (v.id) {
-//            R.id.fab_minus -> {
-//                model.decrease()
-//            }
-        }
-    }
+
     private fun initTap(){
         fragmentManager = supportFragmentManager
         if (firstFragment == null) {
@@ -48,8 +39,14 @@ class MainActivity : BaseActivity() {
                 .commitAllowingStateLoss()
         }
     }
+    override fun onClick(v: View) {
+        when (v.id) {
+//            R.id.fab_minus -> {
+//                model.decrease()
+//            }
+        }
+    }
     override fun onclic(v: View, position: Int) {
-//        Log.e("onclic",  "${v.id}  :  ${position}")
         when(v.id){
 //            R.id.tv_todo ->{
 //                model.modi(position)

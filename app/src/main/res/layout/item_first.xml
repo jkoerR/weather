@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/iv_todo"
             android:layout_alignStart="@id/tv_todo"
             android:layout_alignEnd="@id/tv_todo"
             android:layout_below="@id/tv_todo"

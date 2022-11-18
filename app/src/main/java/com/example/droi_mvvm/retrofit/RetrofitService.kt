@@ -27,16 +27,18 @@ interface RetrofitService {
         @Field("push_yn") push_yn: String?
     ): Call<JsonObject?>?
 
-//    @POST("/data/2.5/weather")
+    //    @POST("/data/2.5/weather")
 //    @FormUrlEncoded
 //    fun getw(
 //        @Field("id") usr_key: String?,
 //        @Field("appid") app_cd: String?,
 //    ): Call<JsonObject?>?
-    @GET("/data/2.5/weather")
+    @GET("/data/2.5/forecast")
     fun getw(
-    @Query("id") usr_key: String?,
-    @Query("appid") app_cd: String?,
+        @Query("q") usr_key: String?,
+        @Query("appid") app_cd: String?,
+//        @Query("cnt") cnt: String?,
+        @Query("lang") lang: String,
+        @Query("units") units: String,
     ): Call<JsonObject?>?
-
 }

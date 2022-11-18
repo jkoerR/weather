@@ -2,9 +2,6 @@ package com.example.droi_mvvm.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +16,7 @@ import com.example.droi_mvvm.R
 import com.example.droi_mvvm.databinding.FragmentFirstBinding
 import com.example.droi_mvvm.model.GDTO
 import com.example.droi_mvvm.viewmodel.MainViewModel
-import com.google.gson.JsonObject
+
 
 class FirstFragment : BaseFragment() {
     lateinit var binding: FragmentFirstBinding
@@ -44,34 +41,19 @@ class FirstFragment : BaseFragment() {
     override fun _init() {
         model = ViewModelProvider(activity as FragmentActivity)[MainViewModel::class.java]
         initRecyclerView()
-        model.call_assets()
-        binding.etMain.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (s!=null &&s.length >2){
-                    firstAdapter?.filter?.filter(s)
-//                }else{
-//                    firstAdapter?.filter?.filter(null)
-//                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
+//        model.call_assets()
+        model.requsetWeather("Seoul")
     }
 
     private fun initRecyclerView() {
-        var layout = LinearLayoutManager(activity)
-        binding.rvFirst.layoutManager = layout
+
+        binding.rvFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        firstAdapter = FirstAdapter(this, requireActivity())
+        binding.rvFirst.adapter = firstAdapter
         val adapterobsever: Observer<ArrayList<GDTO.city>> =
             Observer {
-                data.value = it
-                firstAdapter = FirstAdapter(this, data)
-                binding.rvFirst.adapter = firstAdapter
+//                data.value = it
+                firstAdapter.diff(it, "")
             }
         model.liveData.observe(this, adapterobsever)
     }
@@ -79,9 +61,9 @@ class FirstFragment : BaseFragment() {
     override fun onclic(v: View, position: Int) {
 //        Log.e("onclic", "${v.id}  :  ${position}")
         when (v.id) {
-            R.id.tv_todo -> {
-                model.moveDetail(position)
-            }
+//            R.id.tv_todo -> {
+////                model.moveDetail(position)
+//            }
         }
     }
 
@@ -97,15 +79,5 @@ class FirstFragment : BaseFragment() {
 
             }
         }
-    }
-
-    override fun jk_result(result: JsonObject?, from: String?) {
-        super.jk_result(result, from)
-//        val code = result!!["rst_cd"].asString
-//        when (code) {
-//            else -> {
-//
-//            }
-//        }
     }
 }

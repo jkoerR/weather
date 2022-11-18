@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">droi_mvvm</string>
+    <string name="app_name">weather</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -10,6 +10,6 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string name="openweathermap">80330866abb24d57ec56cc44cf800f0e</string>
+    <string name="openweathermap">bf6c9ce1efcb26212fc8bb81ade4c550</string>
 
 </resources>

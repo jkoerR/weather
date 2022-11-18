@@ -14,10 +14,10 @@ class GDTO {
         var lon: String = "",
         var lat: String = "",
     )
-    data class coord_d(
-        var lon: Double = 0.0,
-        var lat: Double = 0.0,
-    )
+//    data class coord_d(
+//        var lon: Double = 0.0,
+//        var lat: Double = 0.0,
+//    )
     data class weather(
         var id: Int = -1,
         var main: String = "",
@@ -27,8 +27,8 @@ class GDTO {
     data class main(
         var temp: Double = 0.0,
         var feels_like: Double = 0.0,
-        var temp_min: Double = 0.0,
-        var temp_max: Double = 0.0,
+        var temp_min: Double = 0.0, //최소온도
+        var temp_max: Double = 0.0, //최대온도
         var pressure: Int = -1,
         var humidity: Int = -1,
         var sea_level: Int = -1,
@@ -51,7 +51,7 @@ class GDTO {
     )
 
     data class weather_base(
-        var coord_d: coord_d = coord_d(),
+        var coord: coord = coord(),
         var weather: ArrayList<weather> = ArrayList(),
         var base: String = "",
         var main: main = main(),
