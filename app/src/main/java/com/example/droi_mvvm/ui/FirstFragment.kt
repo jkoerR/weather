@@ -16,6 +16,7 @@ import com.example.droi_mvvm.R
 import com.example.droi_mvvm.databinding.FragmentFirstBinding
 import com.example.droi_mvvm.model.GDTO
 import com.example.droi_mvvm.viewmodel.MainViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 
 
 class FirstFragment : BaseFragment() {
@@ -42,9 +43,19 @@ class FirstFragment : BaseFragment() {
         model = ViewModelProvider(activity as FragmentActivity)[MainViewModel::class.java]
         initRecyclerView()
 //        model.call_assets()
+        startShimmer(binding.sfl)
         model.requsetWeather("Seoul")
     }
 
+    fun startShimmer(view: ShimmerFrameLayout) {
+        view.showShimmer(true)
+        view.startShimmer()
+    }
+
+    fun stopShimmer(view: ShimmerFrameLayout) {
+        view.stopShimmer()
+        view.hideShimmer()
+    }
     private fun initRecyclerView() {
 
         binding.rvFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
