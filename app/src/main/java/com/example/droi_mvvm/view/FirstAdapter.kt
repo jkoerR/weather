@@ -1,4 +1,4 @@
-package com.example.droi_mvvm.ui
+package com.example.droi_mvvm.view
 
 import android.app.Activity
 import android.os.Handler
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,14 +15,13 @@ import com.example.droi_mvvm.databinding.ItemFirstBinding
 import com.example.droi_mvvm.model.GDTO
 import com.example.droi_mvvm.util.DiffCallback
 import com.example.droi_mvvm.util.Logger
-import com.example.droi_mvvm.viewmodel.MainViewModel
 
 class FirstAdapter(
     private val listener: OnItemClick,
     val activity: Activity?
 ) : RecyclerView.Adapter<FirstAdapter.TodoViewHolder>(), Filterable {
-    val data : ArrayList<GDTO.city>  = ArrayList()
-    val arr : ArrayList<GDTO.city>  = ArrayList()
+    val data : ArrayList<GDTO.Processing>  = ArrayList()
+    val arr : ArrayList<GDTO.Processing>  = ArrayList()
 //    init {
 //        data.addAll(files.value!!)
 //    }
@@ -33,7 +31,7 @@ class FirstAdapter(
         return TodoViewHolder(binding)
     }
 
-    fun diff(arr: ArrayList<GDTO.city>, str: String) {
+    fun diff(arr: ArrayList<GDTO.Processing>, str: String) {
         val tileDiffUtilCallback = DiffCallback(this.arr, arr)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(tileDiffUtilCallback)
         diffResult.dispatchUpdatesTo(this)
@@ -47,7 +45,7 @@ class FirstAdapter(
         notifyDataSetChanged()
     }
 
-    private fun setNewTiles(newTiles: MutableList<GDTO.city>) {
+    private fun setNewTiles(newTiles: MutableList<GDTO.Processing>) {
         this.arr.run {
             clear()
             addAll(newTiles)
@@ -72,15 +70,16 @@ class FirstAdapter(
 
     inner class TodoViewHolder(private val binding: ItemFirstBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: GDTO.city) {
-            binding.tvTodo.tag = adapterPosition
-            binding.tvTodo.text = "${item.country}   :   ${item.name}"
-            binding.tvTodo.setOnClickListener {
-                listener.onclic(it, adapterPosition)
-            }
-            if (activity != null) {
-                Glide.with(activity).load("").into(binding.ivTodo)
-            }
+        fun bind(item: GDTO.Processing) {
+            Logger.loge("item  :  ${item}")
+//            binding.tvTodo.tag = adapterPosition
+//            binding.tvTodo.text = "${item.country}   :   ${item.name}"
+//            binding.tvTodo.setOnClickListener {
+//                listener.onclic(it, adapterPosition)
+//            }
+//            if (activity != null) {
+//                Glide.with(activity).load("").into(binding.ivTodo)
+//            }
         }
     }
 
@@ -93,7 +92,7 @@ class FirstAdapter(
 //                    Logger.loge("performFiltering    ${data}")
                     arr.addAll(data)
                 } else {
-                    val filteredList = ArrayList<GDTO.city>()
+                    val filteredList = ArrayList<GDTO.Processing>()
 //                    for (dto in data) {
 ////                        if (dto.buyAdvertisingStatus != "") {
 ////                            if (dto.buyAdvertisingStatus?.contains(charString) == true) {

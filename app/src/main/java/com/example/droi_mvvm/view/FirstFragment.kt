@@ -1,4 +1,4 @@
-package com.example.droi_mvvm.ui
+package com.example.droi_mvvm.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.droi_mvvm.BaseFragment
 import com.example.droi_mvvm.R
 import com.example.droi_mvvm.databinding.FragmentFirstBinding
 import com.example.droi_mvvm.model.GDTO
+import com.example.droi_mvvm.util.Logger
 import com.example.droi_mvvm.viewmodel.MainViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 
@@ -24,7 +26,7 @@ class FirstFragment : BaseFragment() {
     lateinit var firstAdapter: FirstAdapter
 
     //    var data = MutableLiveData<ArrayList<DTOS.recy>>()
-    var data = MutableLiveData<ArrayList<GDTO.city>>()
+//    var data = MutableLiveData<ArrayList<GDTO.city>>()
 
     //    private val model: MainViewModel by viewModels()
     private lateinit var model: MainViewModel
@@ -42,9 +44,16 @@ class FirstFragment : BaseFragment() {
     override fun _init() {
         model = ViewModelProvider(activity as FragmentActivity)[MainViewModel::class.java]
         initRecyclerView()
+        setObseve()
 //        model.call_assets()
         startShimmer(binding.sfl)
-        model.requsetWeather("Seoul")
+        model.requsetWeather(model.city[model.callNum])
+    }
+
+    fun setObseve() {
+        model.weatherData.observe(this) {
+            model.calc(it)
+        }
     }
 
     fun startShimmer(view: ShimmerFrameLayout) {
@@ -58,15 +67,19 @@ class FirstFragment : BaseFragment() {
     }
     private fun initRecyclerView() {
 
-        binding.rvFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         firstAdapter = FirstAdapter(this, requireActivity())
         binding.rvFirst.adapter = firstAdapter
-        val adapterobsever: Observer<ArrayList<GDTO.city>> =
+        val adapterobsever: Observer<ArrayList<GDTO.Processing>> =
             Observer {
 //                data.value = it
+                Logger.loge("it   :   ${it.size}")
                 firstAdapter.diff(it, "")
+                if (model.callNum == model.city.size-1){
+                    stopShimmer(binding.sfl)
+                }
             }
-        model.liveData.observe(this, adapterobsever)
+        model.weatherProcessing.observe(this, adapterobsever)
     }
 
     override fun onclic(v: View, position: Int) {

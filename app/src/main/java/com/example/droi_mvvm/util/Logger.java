@@ -10,8 +10,17 @@ public class Logger
 	private static String LINE_SEPARATOR   = System.getProperty("line.separator");
 	public static void loge(String message)
 	{
-		if(FORCE_LOG)
-			Log.e(TAG_MESSAGE+"["+ Thread.currentThread().getName()+"]",LINE_SEPARATOR+message+LINE_SEPARATOR+getStackTraceMessage(1));
+		if(FORCE_LOG){
+			while (message.length() > 0) {
+				if (message.length() > 4000) {
+					Log.e(TAG_MESSAGE+"["+ Thread.currentThread().getName()+"]",LINE_SEPARATOR+message.substring(0, 4000)+LINE_SEPARATOR+getStackTraceMessage(1));
+					message = message.substring(4000);
+				} else {
+					Log.e(TAG_MESSAGE+"["+ Thread.currentThread().getName()+"]",LINE_SEPARATOR+message+LINE_SEPARATOR+getStackTraceMessage(1));
+					break;
+				}
+			}
+		}
 	}
 	public static void logw(String message)
 	{

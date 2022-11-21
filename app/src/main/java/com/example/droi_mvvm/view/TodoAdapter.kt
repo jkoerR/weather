@@ -1,4 +1,4 @@
-//package com.example.droi_mvvm.ui
+package com.example.droi_mvvm.view//package com.example.droi_mvvm.ui
 //
 //import android.view.LayoutInflater
 //import android.view.View

@@ -1,11 +1,10 @@
-package com.example.droi_mvvm.ui
+package com.example.droi_mvvm.view
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.example.droi_mvvm.Const
 import com.example.droi_mvvm.callback.OnItemClick
