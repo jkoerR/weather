@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.droi_mvvm.callback.OnItemClick
-import com.example.droi_mvvm.databinding.ItemFirstBinding
+import com.example.droi_mvvm.databinding.ItemFirstcBinding
+import com.example.droi_mvvm.databinding.ItemFirsttBinding
 import com.example.droi_mvvm.model.GDTO
 import com.example.droi_mvvm.util.DiffCallback
 import com.example.droi_mvvm.util.Logger
@@ -19,16 +20,29 @@ import com.example.droi_mvvm.util.Logger
 class FirstAdapter(
     private val listener: OnItemClick,
     val activity: Activity?
-) : RecyclerView.Adapter<FirstAdapter.TodoViewHolder>(), Filterable {
-    val data : ArrayList<GDTO.Processing>  = ArrayList()
-    val arr : ArrayList<GDTO.Processing>  = ArrayList()
-//    init {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+    val data: ArrayList<GDTO.Processing> = ArrayList()
+    val arr: ArrayList<GDTO.Processing> = ArrayList()
+
+    //    init {
 //        data.addAll(files.value!!)
 //    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemFirstBinding.inflate(layoutInflater)
-        return TodoViewHolder(binding)
+//        return TodoViewHolder(binding)
+        return when (viewType) {
+            0 -> {
+                val binding = ItemFirsttBinding.inflate(layoutInflater, parent, false)
+                TodoViewHolderT(binding)
+            }
+            1 -> {
+                val binding = ItemFirstcBinding.inflate(layoutInflater, parent, false)
+                TodoViewHolderC(binding)
+            }else -> {
+                val binding = ItemFirsttBinding.inflate(layoutInflater, parent, false)
+                TodoViewHolderT(binding)
+            }
+        }
     }
 
     fun diff(arr: ArrayList<GDTO.Processing>, str: String) {
@@ -56,29 +70,50 @@ class FirstAdapter(
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return arr[position].type
+    }
+
 
     override fun getItemCount(): Int {
         return arr.size
     }
-    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        Logger.loge("${files.value!![position]}")
-        arr[position].let {
-            holder.bind(it);
-        }
+//        arr[position].let {
+//            holder.bind(it);
+//        }
 //        holder.bind(items[position])
+        when (arr[position].type) {
+            0 -> {
+                arr[position].let {
+                    (holder as TodoViewHolderT).bind(it)
+                }
+            }
+            1 -> {
+                arr[position].let {
+                    (holder as TodoViewHolderC).bind(it)
+                }
+            }
+        }
     }
 
-    inner class TodoViewHolder(private val binding: ItemFirstBinding) :
+    inner class TodoViewHolderT(private val binding: ItemFirsttBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: GDTO.Processing) {
-            Logger.loge("item  :  ${item}")
-//            binding.tvTodo.tag = adapterPosition
-//            binding.tvTodo.text = "${item.country}   :   ${item.name}"
-//            binding.tvTodo.setOnClickListener {
-//                listener.onclic(it, adapterPosition)
-//            }
+            binding.tvTodo.text = "${item.city}"
+        }
+    }
+    inner class TodoViewHolderC(private val binding: ItemFirstcBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: GDTO.Processing) {
+            binding.tvDate.text = "${item.date}"
+            binding.tvWeather.text = "${item.weather}"
+            binding.tvMax.text = "Max : ${item.max}"
+            binding.tvMin.text = "Min : ${item.min}"
 //            if (activity != null) {
-//                Glide.with(activity).load("").into(binding.ivTodo)
+//                Glide.with(activity).load(item.tierRank.imageUrl).into(binding.ivTier)
 //            }
         }
     }

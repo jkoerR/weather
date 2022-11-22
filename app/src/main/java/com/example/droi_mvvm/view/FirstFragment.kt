@@ -73,7 +73,7 @@ class FirstFragment : BaseFragment() {
         val adapterobsever: Observer<ArrayList<GDTO.Processing>> =
             Observer {
 //                data.value = it
-                Logger.loge("it   :   ${it.size}")
+//                Logger.loge("it   :   ${it.size}")
                 firstAdapter.diff(it, "")
                 if (model.callNum == model.city.size-1){
                     stopShimmer(binding.sfl)
